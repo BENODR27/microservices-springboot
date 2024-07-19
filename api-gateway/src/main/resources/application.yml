@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order/**
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/product/**
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins: [ "http://localhost:3000" ] # Replace with your frontend origin
+#            allowedMethods: [ "GET", "POST", "PUT", "DELETE" ] # Allowed HTTP methods
+#            allowedHeaders: [ "*" ] # Allowed headers (consider tightening restrictions later)
+
+    discovery:
+      locator:
+        enabled: true
+        lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
