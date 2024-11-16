@@ -1,0 +1,6 @@
+docker-compose build
+docker-compose up -d
+docker ps
+docker logs <container_id>
+docker stop <container_id>
+docker start <container_id>

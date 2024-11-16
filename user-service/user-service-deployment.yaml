@@ -1,0 +1,45 @@
+# user-service-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: your-dockerhub-username/user-service:latest
+        ports:
+        - containerPort: 8081
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+# user-service-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  type: ClusterIP
+  selector:
+    app: user-service
+  ports:
+  - port: 8081
+    targetPort: 8081
+
+
+# kubectl apply -f user-service-deployment.yaml
+# kubectl apply -f user-service-service.yaml
+# # Repeat for other services

@@ -1,0 +1,70 @@
+#demo code
+version: '3'
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-server
+
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+
+  discovery-server:
+    build: ./discovery-server
+    ports:
+      - "8761:8761"
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  product-service:
+    build: ./product-service
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8083:8083"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "8084:8084"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  inventory-service:
+    build: ./inventory-service
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  shipping-service:
+    build: ./shipping-service
+    ports:
+      - "8086:8086"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "8087:8087"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
